@@ -257,6 +257,6 @@ def main_menu(dir_path, file_name):
 
 # Пример использования функции
 if __name__ == "__main__":
-    PATH = '../HW-1/db'
+    PATH = '/db'
     FILE = 'tel_book.xlsx'
     main_menu(PATH, FILE)
