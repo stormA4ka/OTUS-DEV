@@ -274,13 +274,13 @@ def edit_row(dir_path: str, file_name: str) -> None:
 
             print("Записи отредактированы.")
             df.to_excel(file_path, sheet_name='Sheet', index=False)
-            return df
+
         else:
             print("Записи не отредактированы.")
-            return df
+
     else:
         print("Записи не найдены.")
-        return df
+
 
 
 def main_menu(dir_path: str, file_name: str) -> None:
@@ -294,33 +294,34 @@ def main_menu(dir_path: str, file_name: str) -> None:
 
     window = 30
     menu = {
-        "0": ("Выйти из программы", sys.exit),
-        "1": ("Информация о базе", info_book(dir_path, file_name)),
-        "2": ("Прочитаь базу", read_book(dir_path, file_name)),
-        "3": ("Добавить абонента", insert_row(dir_path, file_name)),
+        "0": ("Выйти из программы", lambda: sys.exit()),
+        "1": ("Информация о базе", lambda: info_book(dir_path, file_name)),
+        "2": ("Прочитаь базу", lambda: read_book(dir_path, file_name)),
+        "3": ("Добавить абонента", lambda: insert_row(dir_path, file_name)),
         "4": ("Найти абонента", lambda: print(search_rows(dir_path, file_name))),
         "5": ("Удалить абонента", lambda: remove_rows(dir_path, file_name)),
         "6": ("Изменить запись", lambda: edit_row(dir_path, file_name)),
-
     }
 
-    while True:
-        print("-" * window * 4)
-        print(
-            "***********************************Вы работаете в телефонном справочнике.***********************************\n\nМеню:")
-        for key, value in menu.items():
-            print(f"{key}. {value[0]}")
+    print("-" * window * 4)
+    print(
+        "***********************************Вы работаете в телефонном справочнике.***********************************\n\nМеню:")
+    for key, value in menu.items():
+        print(f"{key}. {value[0]}")
 
-        print("-" * window * 4)
-        choice = input("Выберите пункт меню (указав номер): ")
-        if choice in menu:
-            menu[choice][1]()
-        else:
-            print("Неверный выбор. Пожалуйста, попробуйте снова.")
+    print("-" * window * 4)
+    choice = input("Выберите пункт меню (указав номер): ")
+    if choice in menu:
+        menu[choice][1]()
+        if choice != "0":  # Если выбран пункт "Выйти из программы", то не вызываем main_menu снова
+            main_menu(dir_path, file_name)
+    else:
+        print("Неверный выбор. Пожалуйста, попробуйте снова.")
+        main_menu(dir_path, file_name)
 
 
 # Пример использования функции
 if __name__ == "__main__":
-    PATH = '/db'
+    PATH = r'C:\Users\dergilev\Desktop\python_projects\OTUS-DEV\lesson.01\db'
     FILE = 'tel_book.xlsx'
     main_menu(PATH, FILE)
