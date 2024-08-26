@@ -5,7 +5,19 @@ from openpyxl import load_workbook, Workbook
 from datetime import datetime
 import pandas as pd
 
-def is_file_exists(dir_path, file_name):
+
+def is_file_exists(dir_path: str, file_name: str) -> None:
+    """
+    Проверяем существует ли файл excel с именем file_name.
+    Если нет, то создаем его с заголовками ["ID", "ФИО", "Телефон", "Комментарий", "Дата добавления"]
+    Args:
+        dir_path:
+        file_name:
+
+    Returns:
+
+    """
+
     # Формируем полный путь к файлу
     file_path = os.path.join(dir_path, file_name)
 
@@ -29,7 +41,16 @@ def is_file_exists(dir_path, file_name):
     else:
         print(f"Файл {file_path} уже существует.")
 
-def is_file_locked(file_path):
+
+def is_file_locked(file_path: str) -> None:
+    """
+    Проверяем открыт ли файл с именем file_name в другой программе
+    Args:
+        file_path:
+
+    Returns:
+
+    """
     try:
         with open(file_path, 'r+b') as f:
             msvcrt.locking(f.fileno(), msvcrt.LK_RLCK, 1)
@@ -37,7 +58,21 @@ def is_file_locked(file_path):
     except IOError:
         return True
 
-def insert_row(dir_path, file_name):
+
+def insert_row(dir_path: str, file_name: str) -> None:
+    """
+    Добавляем запись (абонента) в файл file_name.
+
+    Вводим поля вручную ["ФИО", "Телефон", "Комментарий"]
+    Заполняются автоматически ["ID", "Дата добавления"]
+    Args:
+        dir_path:
+        file_name:
+
+    Returns:
+
+    """
+
     # Формируем полный путь к файлу
     file_path = os.path.join(dir_path, file_name)
 
@@ -46,7 +81,8 @@ def insert_row(dir_path, file_name):
 
     # Проверяем, заблокирован ли файл
     if is_file_locked(file_path):
-        print(f"Ошибка: Файл {file_path} заблокирован (открыт в другой программе). Пожалуйста, закройте файл и повторите попытку.")
+        print(
+            f"Ошибка: Файл {file_path} заблокирован (открыт в другой программе). Пожалуйста, закройте файл и повторите попытку.")
         return
 
     # Запрашиваем данные у пользователя
@@ -81,13 +117,33 @@ def insert_row(dir_path, file_name):
         print(f"Произошла ошибка: {e}")
 
 
-def info_bd(dir_path, file_name):
+def info_book(dir_path: str, file_name: str) -> None:
+    """
+    Выводим информацию об указанной базе.
+    Args:
+        dir_path:
+        file_name:
+
+    Returns:
+
+    """
+
     # Формируем полный путь к файлу
     file_path = os.path.join(dir_path, file_name)
     df = pd.read_excel(file_path)
     print(df.info())
 
-def read_book(dir_path, file_name):
+
+def read_book(dir_path: str, file_name: str) -> None:
+    """
+    Читаем базу.
+    Args:
+        dir_path:
+        file_name:
+
+    Returns:
+
+    """
     # Формируем полный путь к файлу
     pd.set_option('display.max_rows', None)
     pd.set_option('display.max_columns', None)
@@ -98,7 +154,7 @@ def read_book(dir_path, file_name):
     print(df)
 
 
-def search_rows(dir_path, file_name):
+def search_rows(dir_path: str, file_name: str) -> None:
     """
     Выбор колонки для поиска и поиск строк по введенным значениям.
 
@@ -139,7 +195,7 @@ def search_rows(dir_path, file_name):
     return rows_to_remove, rows_to_remove['ID'].tolist()
 
 
-def remove_rows(dir_path, file_name):
+def remove_rows(dir_path: str, file_name: str) -> None:
     """
     Находит и удаляет строки из DataFrame на основе значений в указанных колонках.
     Поиск осуществляется по выбранному пользователем полю.
@@ -154,9 +210,9 @@ def remove_rows(dir_path, file_name):
 
     # Проверяем, заблокирован ли файл
     if is_file_locked(file_path):
-        print(f"Ошибка: Файл {file_path} заблокирован (открыт в другой программе). Пожалуйста, закройте файл и повторите попытку.")
+        print(
+            f"Ошибка: Файл {file_path} заблокирован (открыт в другой программе). Пожалуйста, закройте файл и повторите попытку.")
         return
-
 
     # Вызываем функцию поиска строк
     rows_to_edit, ids_to_remove = search_rows(dir_path, file_name)
@@ -182,7 +238,7 @@ def remove_rows(dir_path, file_name):
         return df
 
 
-def edit_row(dir_path, file_name):
+def edit_row(dir_path: str, file_name: str) -> None:
     """
     Находит и редактирует строку в DataFrame на основе значения в указанной колонке.
     После редактирования сохраняет изменения в файл Excel.
@@ -226,33 +282,41 @@ def edit_row(dir_path, file_name):
         print("Записи не найдены.")
         return df
 
-def main_menu(dir_path, file_name):
+
+def main_menu(dir_path: str, file_name: str) -> None:
+    """
+    Запускает меню базы абонентов
+
+    :param dir_path: Путь к директории с файлом
+    :param file_name: Имя файла
+    :return: None
+    """
+
     window = 30
     menu = {
         "0": ("Выйти из программы", sys.exit),
-        "1": ("Информация о базе",  lambda: info_bd(dir_path, file_name)),
-        "2": ("Прочитаь базу",      lambda: read_book(dir_path, file_name)),
-        "3": ("Добавить абонента",  lambda: insert_row(dir_path, file_name)),
+        "1": ("Информация о базе", info_book(dir_path, file_name)),
+        "2": ("Прочитаь базу", read_book(dir_path, file_name)),
+        "3": ("Добавить абонента", insert_row(dir_path, file_name)),
         "4": ("Найти абонента", lambda: print(search_rows(dir_path, file_name))),
-        "5": ("Удалить абонента",   lambda: remove_rows(dir_path, file_name)),
-        "6": ("Изменить запись",    lambda: edit_row(dir_path, file_name)),
+        "5": ("Удалить абонента", lambda: remove_rows(dir_path, file_name)),
+        "6": ("Изменить запись", lambda: edit_row(dir_path, file_name)),
 
     }
 
     while True:
-        print("-"*window*4)
-        print("***********************************Вы работаете в телефонном справочнике.***********************************\n\nМеню:")
+        print("-" * window * 4)
+        print(
+            "***********************************Вы работаете в телефонном справочнике.***********************************\n\nМеню:")
         for key, value in menu.items():
             print(f"{key}. {value[0]}")
 
-        print("-"*window*4)
+        print("-" * window * 4)
         choice = input("Выберите пункт меню (указав номер): ")
         if choice in menu:
             menu[choice][1]()
         else:
             print("Неверный выбор. Пожалуйста, попробуйте снова.")
-
-
 
 
 # Пример использования функции
