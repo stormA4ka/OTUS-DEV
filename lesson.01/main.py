@@ -294,13 +294,13 @@ def main_menu(dir_path: str, file_name: str) -> None:
 
     window = 30
     menu = {
-        "0": ("Выйти из программы", lambda: sys.exit()),
-        "1": ("Информация о базе", lambda: info_book(dir_path, file_name)),
-        "2": ("Прочитаь базу", lambda: read_book(dir_path, file_name)),
-        "3": ("Добавить абонента", lambda: insert_row(dir_path, file_name)),
-        "4": ("Найти абонента", lambda: print(search_rows(dir_path, file_name))),
-        "5": ("Удалить абонента", lambda: remove_rows(dir_path, file_name)),
-        "6": ("Изменить запись", lambda: edit_row(dir_path, file_name)),
+        "0": ("Выйти из программы",  sys.exit()),
+        "1": ("Информация о базе",  info_book(dir_path, file_name)),
+        "2": ("Прочитаь базу",  read_book(dir_path, file_name)),
+        "3": ("Добавить абонента",  insert_row(dir_path, file_name)),
+        "4": ("Найти абонента",  print(search_rows(dir_path, file_name))),
+        "5": ("Удалить абонента",  remove_rows(dir_path, file_name)),
+        "6": ("Изменить запись",  edit_row(dir_path, file_name)),
     }
 
     print("-" * window * 4)
