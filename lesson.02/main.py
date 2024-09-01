@@ -1,11 +1,11 @@
-from model import User, Book, Menu
+from model import Book
+from view import View
+from controller import Controller
 
 if __name__ == '__main__':
 
-    # путь к базе
-    file_path = 'users.json'
-    # Создаем экземпляр класса Book
-    book = Book(file_path)
+    file_path = 'users.json' # путь к базе
+    book = Book(file_path) # Создаем экземпляр класса Book
 
 
     # Добавление пользователя
@@ -34,8 +34,10 @@ if __name__ == '__main__':
 
 
 
-    menu = Menu(book)
-    menu.run()
+
+    view = View()
+    controller = Controller(book, view)
+    controller.run()
 
 
     print('job done')
