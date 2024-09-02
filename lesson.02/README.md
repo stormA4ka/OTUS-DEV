@@ -6,6 +6,48 @@ git commit -m "comment your commit"
 
 git push -u origin main
 ```
+### При ошибке
+```
+(base) C:\Users\dergilev\Desktop\python_projects\OTUS-DEV>git push -u origin main
+To https://github.com/stormA4ka/OTUS-DEV.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/stormA4ka/OTUS-DEV.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+```
+### Решение следующиее
+Ошибка, которую вы видите, означает, что удаленный репозиторий (`origin`) содержит изменения, которых нет в вашем локальном репозитории. Это может произойти, если кто-то другой внес изменения в удаленный репозиторий или если вы внесли изменения напрямую через веб-интерфейс GitHub.
+
+Чтобы решить эту проблему, вам нужно сначала объединить изменения из удаленного репозитория с вашим локальным репозиторием. Вот шаги, которые вам нужно выполнить:
+
+1. **Получите изменения из удаленного репозитория:**
+   ```sh
+   git fetch origin
+   ```
+
+2. **Объедините изменения из удаленного репозитория с вашим локальным репозиторием:**
+   ```sh
+   git merge origin/main
+   ```
+
+   Или вы можете использовать команду `git pull`, которая объединяет `git fetch` и `git merge` в одну команду:
+   ```sh
+   git pull origin main
+   ```
+
+3. **Решите любые конфликты слияния, если они возникнут:**
+   Если возникнут конфликты, Git уведомит вас об этом, и вам нужно будет разрешить их вручную. После разрешения конфликтов добавьте разрешенные файлы с помощью `git add <filename>`.
+
+4. **Снова отправьте ваши изменения:**
+   ```sh
+   git push -u origin main
+   ```
+
+После выполнения этих шагов ваши локальные изменения будут успешно отправлены в удаленный репозиторий.
 
 Архитектура MVC (Model-View-Controller) — это шаблон проектирования, который разделяет приложение на три основных компонента: Model (Модель), View (Вид) и Controller (Контроллер). Это позволяет улучшить структуру кода, упростить его поддержку и расширение. Вот как каждый из этих компонентов должен быть организован:
 
