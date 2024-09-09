@@ -2,6 +2,14 @@ import datetime
 import json
 import os
 
+class BookException(Exception):
+    pass
+
+class WrongInt(BookException):
+    def __init__(self, value):
+        self.value = value
+        super().__init__(f"Ожидалось целое число, но получено: {value}, введите данные корректно")
+
 class User:
     _id_counter = 0
 
@@ -12,6 +20,13 @@ class User:
         self.id = id if id is not None else User._id_counter
         User._id_counter = self.id + 1 if id is None else User._id_counter
         self.date_added = date_added if date_added is not None else datetime.datetime.now()
+        self.validate_int(phone)  # Проверка номера телефона
+
+    def validate_int(self, value):
+        try:
+            int(value)
+        except ValueError:
+            raise WrongInt(value)
 
     def __str__(self):
         return (f"ID: {self.id}, ФИО: {self.full_name}, Телефон: {self.phone}, "
@@ -36,21 +51,40 @@ class Book:
             json.dump([user.__dict__ for user in self.users], file, ensure_ascii=False, default=str)
 
     def search_user(self, user_id):
+
+        try:
+            user_id = int(user_id)
+        except ValueError:
+            raise WrongInt(user_id)
+        # self.validate_int(user_id)
+        # user_id = int(user_id)
+
         for user in self.users:
             if user.id == user_id:
                 return user
         return None
 
     def remove_user(self, user_id):
+        try:
+            user_id = int(user_id)
+        except ValueError:
+            raise WrongInt(user_id)
+
         self.users = [user for user in self.users if user.id != user_id]
         self.save_book()
 
     def edit_user(self, user_id, full_name=None, phone=None, comment=None):
+        try:
+            user_id = int(user_id)
+        except ValueError:
+            raise WrongInt(user_id)
+
         user = self.search_user(user_id)
         if user:
             if full_name:
                 user.full_name = full_name
             if phone:
+                user.validate_int(phone)  # Проверка номера телефона
                 user.phone = phone
             if comment:
                 user.comment = comment
@@ -61,6 +95,7 @@ class Book:
         self.users.append(new_user)
         self.save_book()
         return new_user
+
 
     def reed_book(self):
         return self.read_users()
