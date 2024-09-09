@@ -32,7 +32,7 @@ class User:
         return (f"ID: {self.id}, ФИО: {self.full_name}, Телефон: {self.phone}, "
                 f"Комментарий: {self.comment}, Дата добавления: {self.date_added}")
 
-class Book:
+class Book(User):
     def __init__(self, file_path):
         self.file_path = file_path
         self.users = self.read_users()
@@ -51,31 +51,19 @@ class Book:
             json.dump([user.__dict__ for user in self.users], file, ensure_ascii=False, default=str)
 
     def search_user(self, user_id):
-        try:
-            user_id = int(user_id)
-        except ValueError:
-            raise WrongInt(user_id)
-
+        self.validate_int(user_id)
         for user in self.users:
             if user.id == user_id:
                 return user
         return None
 
     def remove_user(self, user_id):
-        try:
-            user_id = int(user_id)
-        except ValueError:
-            raise WrongInt(user_id)
-
+        self.validate_int(user_id)
         self.users = [user for user in self.users if user.id != user_id]
         self.save_book()
 
     def edit_user(self, user_id, full_name=None, phone=None, comment=None):
-        try:
-            user_id = int(user_id)
-        except ValueError:
-            raise WrongInt(user_id)
-
+        self.validate_int(user_id)
         user = self.search_user(user_id)
         if user:
             if full_name:
