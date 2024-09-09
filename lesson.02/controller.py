@@ -48,13 +48,13 @@ class Controller:
         return True
 
     def search_user(self):
-        user_id = int(self.view.get_input("Введите ID абонента: "))
+        user_id = self.view.get_input("Введите ID абонента: ")
         user = self.book.search_user(user_id)
         self.view.display_user(user)
         return True
 
     def remove_user(self):
-        user_id = int(self.view.get_input("Введите ID абонента: "))
+        user_id = self.view.get_input("Введите ID абонента: ")
         self.book.remove_user(user_id)
         return True
 

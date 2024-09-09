@@ -8,7 +8,7 @@ class BookException(Exception):
 class WrongInt(BookException):
     def __init__(self, value):
         self.value = value
-        super().__init__(f"Ожидалось целое число, но получено: {value}, введите данные корректно")
+        super().__init__(f"Упсс.. Ожидалось целое число, но получено: {value}, введите данные корректно :)")
 
 class User:
     _id_counter = 0
@@ -51,13 +51,10 @@ class Book:
             json.dump([user.__dict__ for user in self.users], file, ensure_ascii=False, default=str)
 
     def search_user(self, user_id):
-
         try:
             user_id = int(user_id)
         except ValueError:
             raise WrongInt(user_id)
-        # self.validate_int(user_id)
-        # user_id = int(user_id)
 
         for user in self.users:
             if user.id == user_id:
