@@ -1,4 +1,4 @@
 temp/
 __pycache__/
 .pytest_cache/
-*.txt
+logs.txt
