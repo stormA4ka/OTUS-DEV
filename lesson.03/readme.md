@@ -218,6 +218,15 @@ git push -u origin main
    ```powershell
    git push -u origin main
    ```
+8. **Если ветка main уже существует, переключитесь на нее**:
+
+   ```powershell
+   PS C:\Users\dergilev\Desktop\projects\OTUS-DEV> git checkout -b main
+   fatal: a branch named 'main' already exists  
+
+   git checkout main
+   ```
+
 
 ### Примечания
 
