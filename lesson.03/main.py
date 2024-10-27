@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, APIRouter, HTTPException
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -66,3 +66,8 @@ async def root(request: Request):
 @app.get("/about/", response_class=HTMLResponse)
 async def about(request: Request):
     return templates.TemplateResponse("about.html", {"request": request})
+
+# Добавляем новый маршрут /ping/
+@app.get("/ping/", response_class=JSONResponse)
+async def ping():
+    return JSONResponse(content={"message": "pong"}, status_code=200)
