@@ -4,8 +4,8 @@
 # Для запуска контейнера выполните:
 # docker run -d -p 8000:8000 myfastapiapp
 
-# Используем базовый образ Python 3.9 slim
-FROM python:3.9-slim
+# Используем базовый образ Python 3.11 slim
+FROM python:3.11-slim
 
 # Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /app
