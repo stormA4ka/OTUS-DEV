@@ -1,0 +1,5 @@
+aiohttp
+SQLAlchemy>=1.4
+asyncpg
+psycopg2
+asyncpg
