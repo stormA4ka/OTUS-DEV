@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Task  # Импортируем модель Task
-from .forms import TaskForm
+from .models import Task, Users  # Импортируем модель Task
+from .forms import TaskForm, UsersForm
+
 
 def home(request):
     return render(request, 'my_app/home.html')
@@ -35,3 +36,28 @@ def edit_task(request, task_id):
 
 def about(request):
     return render(request, 'my_app/about.html')  # Укажите правильный путь к шаблону
+
+def user_list(request):
+    users = Users.objects.all()  # Получаем всех пользователей из базы данных
+    return render(request, 'my_app/users_list.html', {'users': users})
+
+def add_user(request):
+    if request.method == 'POST':
+        form = UsersForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('users_list')  # Перенаправление на страницу списка пользователей
+    else:
+        form = UsersForm()
+    return render(request, 'my_app/add_user.html', {'form': form})
+
+def edit_user(request, user_id):
+    user = Users.objects.get(id=user_id)
+    if request.method == 'POST':
+        form = UsersForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('users_list')  # Перенаправление на страницу списка пользователей
+    else:
+        form = UsersForm(instance=user)
+    return render(request, 'my_app/edit_user.html', {'form': form})

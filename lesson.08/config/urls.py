@@ -26,6 +26,9 @@ urlpatterns = [
     path('tasks/', views.task_list, name='task_list'),  # Маршрут для списка заявок
     path('tasks/add/', views.add_task, name='add_task'),
     path('tasks/edit/<int:task_id>/', views.edit_task, name='edit_task'),
+    path('users/', views.user_list, name='users_list'),
+    path('users/add/', views.add_user, name='add_user'),
+    path('users/edit/<int:user_id>/', views.edit_user, name='edit_user'),
     path('about/', views.about, name='about'),  # Маршрут для страницы "О нас"
 
 ]

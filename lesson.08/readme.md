@@ -13,12 +13,15 @@
 Настроить базовый шаблон с использованием block и extends. (base.html, home.html)
 Создать страницу списка заявок (Task), где отображаются дата заявки, описание и id заявки. (task_list.html)
 Настроить страницу деталей заявок с выводом всех данных.
+
 ## Создать формы:
 Настроить форму для добавления новой заявоки.
-Настроить форму для редактирования заявоки.
+Настроить форму для редактирования заявок.
+
 ## Связь с шаблонами:
 Настроить отображение ошибок валидации в шаблонах.
 Реализовать обработку пользовательского ввода через контроллеры.
+
 ## Настроить админку:
 Добавить кастомизацию: list_display, list_filter, search_fields.
 Создать кастомные действия через @admin.action. 
@@ -39,5 +42,5 @@ from my_app.models import Task, Users
 user = Users.objects.create(phone_number='89267263610')
 
 # Создание заявок
-Task.objects.create(phone_number=user,  problem_description='Проблема 1',)
-Task.objects.create( phone_number=user, platform_type='Тип 2', legal_entity='ООО "Пример 2"', problem_description='Проблема 2', problem_location='Место 2', problem_type='Тип проблемы 2',)
+Task.objects.create(phone_number=user, problem_description='Проблема 1',)
+Task.objects.create(phone_number=user, platform_type='Тип 2', legal_entity='ООО "Пример 2"', problem_description='Проблема 2', problem_location='Место 2', problem_type='Тип проблемы 2',)
