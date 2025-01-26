@@ -39,7 +39,7 @@ from django.utils import timezone
 from my_app.models import Task, Users
 
 # Создание пользователя
-user = Users.objects.create(phone_number='89267263610')
+user = Users.objects.create(phone_number='892679999991)
 
 # Создание заявок
 Task.objects.create(phone_number=user, problem_description='Проблема 1',)
