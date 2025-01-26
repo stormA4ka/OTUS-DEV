@@ -23,5 +23,5 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),  # Пример маршрута
-
+    path('tasks/', views.task_list, name='task_list'),  # Маршрут для списка заявок
 ]
