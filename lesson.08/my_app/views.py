@@ -32,5 +32,6 @@ def edit_task(request, task_id):
         form = TaskForm(instance=task)
     return render(request, 'my_app/edit_task.html', {'form': form})
 
+
 def about(request):
     return render(request, 'my_app/about.html')  # Укажите правильный путь к шаблону
