@@ -30,22 +30,14 @@
 Настройка админки с кастомизацией.
 
 
+# Пример создания пользователя
+python manage.py shell
 from django.utils import timezone
 from my_app.models import Task, Users
 
-# Пример создания пользователя (если нужно)
-python manage.py shell
-user = Users.objects.create(phone_number='12345123456')
+# Создание пользователя
+user = Users.objects.create(phone_number='89267263610')
 
 # Создание заявок
 Task.objects.create(phone_number=user,  problem_description='Проблема 1',)
-
-Task.objects.create(
-    phone_number=user,
-    platform_type='Тип 2',
-    legal_entity='ООО "Пример 2"',
-    problem_description='Проблема 2',
-    problem_location='Место 2',
-    problem_type='Тип проблемы 2',
-    task_date=timezone.now(),
-)
+Task.objects.create( phone_number=user, platform_type='Тип 2', legal_entity='ООО "Пример 2"', problem_description='Проблема 2', problem_location='Место 2', problem_type='Тип проблемы 2',)

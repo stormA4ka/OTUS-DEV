@@ -24,4 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),  # Пример маршрута
     path('tasks/', views.task_list, name='task_list'),  # Маршрут для списка заявок
+    path('tasks/add/', views.add_task, name='add_task'),
+    path('tasks/edit/<int:task_id>/', views.edit_task, name='edit_task'),
+    path('about/', views.about, name='about'),  # Маршрут для страницы "О нас"
+
 ]

@@ -11,9 +11,10 @@
         <h1>Портал безопасности</h1>
         <nav>
             <ul>
-                <li><a href="/">Главная</a></li>
+                <li><a href="{% url 'task_list' %}">Список заявок</a></li>
+                <li><a href="{% url 'add_task' %}">Добавить заявку</a></li>
+                <li><a href="{% url 'edit_task' %}">Изменить заявку</a></li>
                 <li><a href="/about/">О нас</a></li>
-                <li><a href="/contact/">Контакты</a></li>
             </ul>
         </nav>
     </header>
