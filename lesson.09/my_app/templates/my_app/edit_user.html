@@ -1,0 +1,13 @@
+{% extends 'my_app/base.html' %}
+
+{% block title %}Редактировать пользователя{% endblock %}
+
+{% block content %}
+    <h2>Редактировать пользователя</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+    <a href="{% url 'users_list' %}" class="btn btn-secondary">Назад к списку</a>
+{% endblock %}
