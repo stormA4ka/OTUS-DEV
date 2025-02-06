@@ -38,8 +38,7 @@ SECRET_KEY = 'django-insecure--+vldx(%%yytr4g)ox%5pu$0s#q_3zo0xbweot@g5l$@r-vp*z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '10.10.4.247']
 
 # Application definition
 
@@ -152,8 +151,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 
-STATIC_URL = '/static/'  # Убедитесь, что это уже есть
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Добавьте эту строку
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

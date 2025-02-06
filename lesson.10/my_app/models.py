@@ -41,3 +41,12 @@ class Task(models.Model):
 
     def __str__(self):
         return f"Заявка #{self.task_id}"
+    
+
+class Log(models.Model):
+    action = models.CharField(max_length=100, verbose_name="Действие")
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='logs', verbose_name="Заявка")
+    timestamp = models.DateTimeField(default=timezone.now, verbose_name="Время действия")
+
+    def __str__(self):
+        return f"{self.action} на заявку #{self.task.task_id} в {self.timestamp}"

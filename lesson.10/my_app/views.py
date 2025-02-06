@@ -1,10 +1,11 @@
+# views.py
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Task, Users  # Импортируем модель Task
+from .models import Task, Users, Log  # Импортируем модель Task и Log
 from .forms import TaskForm, UsersForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .tasks import send_welcome_email
-
+from .tasks import log_task_action
 
 def home(request):
     return render(request, 'my_app/home.html')
@@ -17,12 +18,12 @@ def add_task(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            form.save()
+            task = form.save()
+            log_task_action.delay('Создание', task.task_id)  # Логирование создания задачи
             return redirect('task_list')
     else:
         form = TaskForm()
     return render(request, 'my_app/add_task.html', {'form': form})
-
 
 def edit_task(request, task_id):
     task = get_object_or_404(Task, task_id=task_id)
@@ -30,11 +31,11 @@ def edit_task(request, task_id):
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
+            log_task_action.delay('Редактирование', task.task_id)  # Логирование редактирования задачи
             return redirect('task_list')  # Перенаправление на страницу списка заявок
     else:
         form = TaskForm(instance=task)
     return render(request, 'my_app/edit_task.html', {'form': form})
-
 
 def about(request):
     return render(request, 'my_app/about.html')  # Укажите правильный путь к шаблону
@@ -64,8 +65,6 @@ def edit_user(request, user_id):
         form = UsersForm(instance=user)
     return render(request, 'my_app/edit_user.html', {'form': form})
 
-
-
 class TaskListView(ListView):
     model = Task  # Указываем модель
     template_name = 'my_app/task_list.html'  # Шаблон для отображения
@@ -84,6 +83,11 @@ class TaskCreateView(CreateView):
     template_name = 'my_app/task_form.html'  # Шаблон для отображения
     success_url = '/tasks/'  # URL для перенаправления после успешного создания
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        log_task_action.delay('Создание', self.object.task_id)  # Логирование создания задачи
+        return response
+
 class TaskUpdateView(UpdateView):
     model = Task  # Указываем модель
     form_class = TaskForm  # Указываем форму
@@ -91,14 +95,21 @@ class TaskUpdateView(UpdateView):
     pk_url_kwarg = 'task_id'  # Имя параметра в URL
     success_url = '/tasks/'  # URL для перенаправления после успешного редактирования
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        log_task_action.delay('Редактирование', self.object.task_id)  # Логирование редактирования задачи
+        return response
+
 class TaskDeleteView(DeleteView):
     model = Task  # Указываем модель
     template_name = 'my_app/task_confirm_delete.html'  # Шаблон для подтверждения удаления
     pk_url_kwarg = 'task_id'  # Имя параметра в URL
     success_url = '/tasks/'  # URL для перенаправления после успешного удаления
 
-
-
+    def delete(self, request, *args, **kwargs):
+        response = super().delete(request, *args, **kwargs)
+        log_task_action.delay('Удаление', self.object.task_id)  # Логирование удаления задачи
+        return response
 
 def register_user(request):
     # Логика регистрации пользователя

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Task, Users
+from .models import Task, Users, Log
 
 # Регистрация модели Users
 @admin.register(Users)
@@ -25,4 +25,9 @@ class TaskAdmin(admin.ModelAdmin):
     # Добавляем действие в список доступных
     actions = [update_problem_description]
 
-    
+# Регистрация модели Log
+@admin.register(Log)
+class LogAdmin(admin.ModelAdmin):
+    list_display = ('action', 'task', 'timestamp')
+    list_filter = ('action', 'timestamp')
+    search_fields = ('action', 'task__task_id')
