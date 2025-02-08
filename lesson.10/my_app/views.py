@@ -6,6 +6,7 @@ from .models import Task, Users, Log  # Импортируем модель Task
 from .forms import TaskForm, UsersForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .tasks import log_task_action
+from openpyxl import Workbook
 
 def home(request):
     return render(request, 'my_app/home.html')
@@ -116,3 +117,30 @@ def register_user(request):
     user_email = request.POST['email']
     send_welcome_email.delay(user_email)  # Отправка задачи в Celery
     return HttpResponse("Регистрация завершена. Проверьте ваш email.")
+
+def generate_report(request):
+    tasks = Task.objects.all()
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Tasks Report"
+
+    # Заголовки
+    ws.append(['Номер заявки', 'Номер телефона', 'Тип площадки', 'Юрлицо', 'Описание проблемы', 'Место проблемы', 'Тип проблемы', 'Дата заявки'])
+
+    # Данные
+    for task in tasks:
+        ws.append([
+            task.task_id,
+            task.phone_number.phone_number,
+            task.platform_type,
+            task.legal_entity,
+            task.problem_description,
+            task.problem_location,
+            task.problem_type,
+            task.task_date.replace(tzinfo=None)  # Удаление информации о временной зоне
+        ])
+
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=tasks_report.xlsx'
+    wb.save(response)
+    return response
