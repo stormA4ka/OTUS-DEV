@@ -2,3 +2,4 @@ __pycache__/
 .venv/
 *.xlsx
 my_hint.md
+media/
