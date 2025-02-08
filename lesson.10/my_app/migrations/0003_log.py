@@ -8,17 +8,38 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('my_app', '0002_alter_users_phone_number'),
+        ("my_app", "0002_alter_users_phone_number"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Log',
+            name="Log",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('action', models.CharField(max_length=100, verbose_name='Действие')),
-                ('timestamp', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Время действия')),
-                ('task', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='logs', to='my_app.task', verbose_name='Заявка')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("action", models.CharField(max_length=100, verbose_name="Действие")),
+                (
+                    "timestamp",
+                    models.DateTimeField(
+                        default=django.utils.timezone.now, verbose_name="Время действия"
+                    ),
+                ),
+                (
+                    "task",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="logs",
+                        to="my_app.task",
+                        verbose_name="Заявка",
+                    ),
+                ),
             ],
         ),
     ]

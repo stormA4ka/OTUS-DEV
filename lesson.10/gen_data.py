@@ -1,7 +1,7 @@
 import os
 import django
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
 
 from my_app.models import Users, Task
@@ -9,21 +9,15 @@ from django.utils import timezone
 
 # Создание пользователей
 user1 = Users.objects.create(
-    phone_number="12345678901",
-    first_name="Иван",
-    last_name="Иванов"
+    phone_number="12345678901", first_name="Иван", last_name="Иванов"
 )
 
 user2 = Users.objects.create(
-    phone_number="23456789012",
-    first_name="Петр",
-    last_name="Петров"
+    phone_number="23456789012", first_name="Петр", last_name="Петров"
 )
 
 user3 = Users.objects.create(
-    phone_number="34567890123",
-    first_name="Анна",
-    last_name="Антонова"
+    phone_number="34567890123", first_name="Анна", last_name="Антонова"
 )
 
 # Создание задач для пользователя 1
@@ -40,7 +34,7 @@ task1 = Task.objects.create(
     initiator_name="Иван Иванов",
     position="Менеджер",
     department="IT",
-    planned_fix_date=timezone.now().date()
+    planned_fix_date=timezone.now().date(),
 )
 
 task2 = Task.objects.create(
@@ -56,7 +50,7 @@ task2 = Task.objects.create(
     initiator_name="Иван Иванов",
     position="Менеджер",
     department="IT",
-    planned_fix_date=timezone.now().date()
+    planned_fix_date=timezone.now().date(),
 )
 
 task3 = Task.objects.create(
@@ -72,7 +66,7 @@ task3 = Task.objects.create(
     initiator_name="Иван Иванов",
     position="Менеджер",
     department="IT",
-    planned_fix_date=timezone.now().date()
+    planned_fix_date=timezone.now().date(),
 )
 
 # Создание задач для пользователя 2
@@ -89,7 +83,7 @@ task4 = Task.objects.create(
     initiator_name="Петр Петров",
     position="Менеджер",
     department="IT",
-    planned_fix_date=timezone.now().date()
+    planned_fix_date=timezone.now().date(),
 )
 
 task5 = Task.objects.create(
@@ -105,7 +99,7 @@ task5 = Task.objects.create(
     initiator_name="Петр Петров",
     position="Менеджер",
     department="IT",
-    planned_fix_date=timezone.now().date()
+    planned_fix_date=timezone.now().date(),
 )
 
 task6 = Task.objects.create(
@@ -121,7 +115,7 @@ task6 = Task.objects.create(
     initiator_name="Петр Петров",
     position="Менеджер",
     department="IT",
-    planned_fix_date=timezone.now().date()
+    planned_fix_date=timezone.now().date(),
 )
 
 # Создание задач для пользователя 3
@@ -138,7 +132,7 @@ task7 = Task.objects.create(
     initiator_name="Анна Антонова",
     position="Менеджер",
     department="IT",
-    planned_fix_date=timezone.now().date()
+    planned_fix_date=timezone.now().date(),
 )
 
 task8 = Task.objects.create(
@@ -154,7 +148,7 @@ task8 = Task.objects.create(
     initiator_name="Анна Антонова",
     position="Менеджер",
     department="IT",
-    planned_fix_date=timezone.now().date()
+    planned_fix_date=timezone.now().date(),
 )
 
 task9 = Task.objects.create(
@@ -170,5 +164,5 @@ task9 = Task.objects.create(
     initiator_name="Анна Антонова",
     position="Менеджер",
     department="IT",
-    planned_fix_date=timezone.now().date()
+    planned_fix_date=timezone.now().date(),
 )
