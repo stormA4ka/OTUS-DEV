@@ -14,16 +14,7 @@ from urllib.parse import urlparse
 from pathlib import Path
 
 
-# Настройки Celery
-CELERY_BROKER_URL = 'redis://redis:6379/0'  # URL для Redis
-CELERY_RESULT_BACKEND = 'redis://redis:6379/0'  # Хранение результатов в Redis
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
 
-# Настройка для broker_connection_retry_on_startup
-CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -162,3 +153,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Настройки Celery
+CELERY_BROKER_URL = 'redis://redis:6379/0'  # URL для Redis
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'  # Хранение результатов в Redis
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+# Настройка для broker_connection_retry_on_startup
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
