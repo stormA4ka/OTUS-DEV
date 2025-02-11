@@ -29,6 +29,12 @@ class Users(models.Model):
 
 
 class Task(models.Model):
+    STATUS_CHOICES = [
+        ('на рассмотрении', 'На рассмотрении'),
+        ('в работе', 'В работе'),
+        ('просрочена', 'Просрочена'),
+        ('выполнена', 'Выполнена'),
+    ]
 
     # Обязательные поля
     phone_number = models.ForeignKey(
@@ -45,6 +51,12 @@ class Task(models.Model):
     problem_type = models.CharField(max_length=100, verbose_name="Тип проблемы")
     task_date = models.DateTimeField(default=timezone.now, verbose_name="Дата заявки")
     task_id = models.AutoField(primary_key=True, verbose_name="Номер заявки ID")
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='на рассмотрении',
+        verbose_name="Статус заявки"
+    )
 
     # Необязательные поля
     problem_photo = models.ImageField(
@@ -74,6 +86,15 @@ class Task(models.Model):
 
     def __str__(self):
         return f"Заявка #{self.task_id}"
+
+    def save(self, *args, **kwargs):
+        if self.planned_fix_date and self.planned_fix_date < timezone.now().date():
+            self.status = 'просрочена'
+        elif self.responsible_person:
+            self.status = 'в работе'
+        else:
+            self.status = 'на рассмотрении'
+        super().save(*args, **kwargs)
 
 
 class Log(models.Model):

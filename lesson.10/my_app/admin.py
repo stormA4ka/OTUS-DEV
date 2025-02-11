@@ -18,7 +18,7 @@ class UsersAdmin(admin.ModelAdmin):
 # Регистрация модели Task
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ("task_id", "phone_number", "problem_description", "task_date")
+    list_display = ("task_id", "phone_number", "status", "problem_description", "task_date", "responsible_person", "planned_fix_date")
     list_filter = ("task_date", "problem_type")
     search_fields = ("problem_description", "legal_entity", "problem_location")
 
